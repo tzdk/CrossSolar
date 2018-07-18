@@ -27,14 +27,14 @@ namespace CrossSolar.Tests.Controller
         public async Task Get_ShouldGetAnalytics()
         {
             // Act
-            var result = await _analyticsController.Get("1");
+            var result = await _analyticsController.Get("AAAA1111BBBB2222");
 
             // Assert
             Assert.NotNull(result);
 
-            var OkResult = result as OkObjectResult;
+            var OkResult = result as StatusCodeResult;
             Assert.NotNull(OkResult);
-            Assert.Equal(200, OkResult.StatusCode);
+            Assert.Equal(404, OkResult.StatusCode);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace CrossSolar.Tests.Controller
                 DateTime = DateTime.UtcNow
             };
             // Act
-            var result = await _analyticsController.Post("1",oneHourElectricity);
+            var result = await _analyticsController.Post("1", oneHourElectricity);
 
             // Assert
             Assert.NotNull(result);
@@ -72,9 +72,9 @@ namespace CrossSolar.Tests.Controller
             // Assert
             Assert.NotNull(result);
 
-            var OkResult = result as OkObjectResult;
+            var OkResult = result as StatusCodeResult;
             Assert.NotNull(OkResult);
-            Assert.Equal(200, OkResult.StatusCode);
+            Assert.Equal(404, OkResult.StatusCode);
         }
     }
 }

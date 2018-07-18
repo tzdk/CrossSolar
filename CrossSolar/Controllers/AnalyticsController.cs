@@ -27,13 +27,13 @@ namespace CrossSolar.Controllers
         [HttpGet("{banelId}/[controller]")]
         public async Task<IActionResult> Get([FromRoute] string panelId)
         {
-            var panel = await _panelRepository.Query()
-                .FirstOrDefaultAsync(x => x.Serial.Equals(panelId, StringComparison.CurrentCultureIgnoreCase));
+            var panel = _panelRepository.Query()
+                .FirstOrDefault(x => x.Serial.Equals(panelId, StringComparison.CurrentCultureIgnoreCase));
 
             if (panel == null) return NotFound();
 
-            var analytics = await _analyticsRepository.Query()
-                .Where(x => x.PanelId.Equals(panelId, StringComparison.CurrentCultureIgnoreCase)).ToListAsync();
+            var analytics =  _analyticsRepository.Query()
+                .Where(x => x.PanelId.Equals(panelId, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
             var result = new OneHourElectricityListModel
             {
@@ -52,13 +52,13 @@ namespace CrossSolar.Controllers
         [HttpGet("{panelId}/[controller]/day")]
         public async Task<IActionResult> DayResults([FromRoute] string panelId)
         {
-            var panel = await _panelRepository.Query()
-                .FirstOrDefaultAsync(x => x.Serial.Equals(panelId, StringComparison.CurrentCultureIgnoreCase));
+            var panel =  _panelRepository.Query()
+                .FirstOrDefault(x => x.Serial.Equals(panelId, StringComparison.CurrentCultureIgnoreCase));
 
             if (panel == null) return NotFound();
 
-            var analytics = await _analyticsRepository.Query()
-                .Where(x => x.PanelId.Equals(panelId, StringComparison.CurrentCultureIgnoreCase)).ToListAsync();
+            var analytics =  _analyticsRepository.Query()
+                .Where(x => x.PanelId.Equals(panelId, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
             List<OneDayElectricityModel> result = analytics.GroupBy(g => new { g.DateTime }).Select(s => new OneDayElectricityModel
             {
